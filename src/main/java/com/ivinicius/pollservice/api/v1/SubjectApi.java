@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @RequestMapping("/v1/subject")
@@ -24,7 +26,7 @@ public class SubjectApi {
 
     @PostMapping
     @ApiOperation(value = "Cria nova pauta", notes = "Cria uma nova pauta e retorna o ID", response = String.class)
-    public Mono<String> create(@RequestBody SubjectRequest subjectRequest){
+    public Mono<String> create(@Valid @RequestBody SubjectRequest subjectRequest){
         log.info("[PROCESSING] Create new subject. Request: {}", subjectRequest);
 
         return subjectService.createSubject(SubjectMapper.map(subjectRequest))
@@ -42,7 +44,7 @@ public class SubjectApi {
         return subjectService.createPoll(subjectId, durationMinutes)
                 .map(poll -> objectMapper.convertValue(poll, PollResponse.class))
                 .doOnSuccess(poll -> log.info("[SUCCESSFUL] Create new poll. Poll: {}", poll))
-                .doOnError(throwable -> log.info("[FAILED] Create new poll. Params: {}, {} {}", subjectId, durationMinutes, throwable.getCause()));
+                .doOnError(throwable -> log.info("[FAILED] Create new poll. Params: {}, {} {}", subjectId, durationMinutes, throwable.getMessage()));
     }
 
 }

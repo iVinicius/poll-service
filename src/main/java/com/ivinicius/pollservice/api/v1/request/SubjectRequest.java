@@ -15,6 +15,6 @@ import javax.validation.constraints.NotNull;
 public class SubjectRequest {
 
     @ApiModelProperty("Descricao da pauta.")
-    @NotNull
+    @NotNull(message = "O campo descricao nao pode estar vazio.")
     private String description;
 }

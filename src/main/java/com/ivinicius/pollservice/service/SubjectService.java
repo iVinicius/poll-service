@@ -20,13 +20,13 @@ public class SubjectService {
         return subjectRepository.save(subject);
     }
 
-    public Mono<Poll> createPoll(String pollId, Long durationMinutes){
-        return subjectExists(pollId)
-                .flatMap(subject -> pollService.createPoll(pollId, durationMinutes));
+    public Mono<Poll> createPoll(String subjectId, Long durationMinutes){
+        return subjectExists(subjectId)
+                .flatMap(subject -> pollService.createPoll(subjectId, durationMinutes));
     }
 
-    public Mono<Subject> subjectExists(String pollId){
-        return subjectRepository.findById(pollId)
+    private Mono<Subject> subjectExists(String subjectId){
+        return subjectRepository.findById(subjectId)
                 .switchIfEmpty(Mono.error(new SubjectNotFoundException()));
     }
 }

@@ -24,8 +24,8 @@ public class PollService {
 
     private RabbitProducer rabbitProducer;
 
-    public Mono<Poll> createPoll(String pollId, Long durationMinutes){
-        return pollRepository.save(PollMapper.map(pollId, durationMinutes));
+    public Mono<Poll> createPoll(String subjectId, Long durationMinutes){
+        return pollRepository.save(PollMapper.map(subjectId, durationMinutes));
     }
 
     public Mono<Poll> pollExists(String pollId){

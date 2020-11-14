@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @RequestMapping("/v1/vote")
@@ -24,7 +26,7 @@ public class VoteApi {
     @PostMapping("/poll/{pollId}")
     @ApiOperation(value = "Vota em uma eleicao", notes = "Vota SIM ou NAO em uma eleicao aberta. Somente CPFs validos.", response = VoteResponse.class)
     public Mono<VoteResponse> vote(@PathVariable("pollId") String pollId,
-                                   @RequestBody VoteRequest voteRequest) {
+                                   @Valid @RequestBody VoteRequest voteRequest) {
         log.info("[PROCESSING] Vote. Request: {}", voteRequest);
 
         return voteService.vote(pollId, VoteMapper.map(voteRequest))
