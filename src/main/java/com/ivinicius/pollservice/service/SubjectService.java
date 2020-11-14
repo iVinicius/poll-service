@@ -22,12 +22,11 @@ public class SubjectService {
 
     public Mono<Poll> createPoll(String pollId, Long durationMinutes){
         return subjectExists(pollId)
-                .filter(aBoolean -> aBoolean)
-                .flatMap(aBoolean -> pollService.createPoll(pollId, durationMinutes))
-                .switchIfEmpty(Mono.error(new SubjectNotFoundException()));
+                .flatMap(subject -> pollService.createPoll(pollId, durationMinutes));
     }
 
-    public Mono<Boolean> subjectExists(String pollId){
-        return subjectRepository.existsById(pollId);
+    public Mono<Subject> subjectExists(String pollId){
+        return subjectRepository.findById(pollId)
+                .switchIfEmpty(Mono.error(new SubjectNotFoundException()));
     }
 }

@@ -7,7 +7,6 @@ public class VoteMapper {
 
     public static Vote map(VoteRequest from){
         return Vote.builder()
-                .pollId(from.getPollId())
                 .taxId(from.getTaxId())
                 .vote(from.getVote())
                 .build();

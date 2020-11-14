@@ -20,7 +20,7 @@ public class PollApi {
     private PollService pollService;
 
     @GetMapping(value = "/{pollId}/result")
-    @ApiOperation(value = "Resultado de uma eleicao", notes = "Retorna o resultado de uma eleicao e divulga no rabbit.", response = Long.class)
+    @ApiOperation(value = "Resultado de uma eleicao", notes = "Retorna o resultado de uma eleicao e divulga no rabbit.", response = ResultResponse.class)
     public Mono<ResultResponse> result(@PathVariable String pollId){
         log.info("[PROCESSING] Results. PollId: {}", pollId);
 

@@ -1,6 +1,8 @@
 package com.ivinicius.pollservice.client;
 
 import com.ivinicius.pollservice.client.response.TaxValidatorResponse;
+import com.ivinicius.pollservice.exception.UserTaxIdNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -20,6 +22,7 @@ public class TaxIdValidatorClient {
                         .pathSegment(taxId)
                         .toUriString())
                 .retrieve()
+                .onStatus(HttpStatus.NOT_FOUND::equals, response -> Mono.error(UserTaxIdNotFoundException::new))
                 .bodyToMono(TaxValidatorResponse.class);
     }
 

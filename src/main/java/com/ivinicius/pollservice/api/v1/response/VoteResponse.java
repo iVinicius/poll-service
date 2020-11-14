@@ -1,5 +1,6 @@
 package com.ivinicius.pollservice.api.v1.response;
 
+import com.ivinicius.pollservice.enums.VoteEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -8,15 +9,15 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString(onlyExplicitlyIncluded = true)
-public class ResultResponse {
+public class VoteResponse {
 
+    @ApiModelProperty("Id do voto")
+    @ToString.Include
+    private String id;
     @ApiModelProperty("Id da votacao")
     @ToString.Include
     private String pollId;
-    @ApiModelProperty("Quantidade de votos 'SIM'")
+    @ApiModelProperty("Valor do voto")
     @ToString.Include
-    private Long yesVotes;
-    @ApiModelProperty("Quantidade de votos 'NAO'")
-    @ToString.Include
-    private Long noVotes;
+    private VoteEnum vote;
 }
